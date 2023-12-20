@@ -1,0 +1,75 @@
+<html>
+<head>
+  <title>Task</title>
+  <style>
+    form {
+      border: dashed black 3px;
+      width: 300px;
+      padding: 20px;
+    }
+    body {
+      background: linear-gradient(to bottom, pink, purple);
+     
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+<body>
+    <center>
+<br><br><br><br><br><br>
+<h1>TO DO LIST</h1>
+<div id="app">
+  <form v-on:submit.prevent="addTask">
+    <p>
+      <h3>Add task to the day</h3>
+      <input type="text" required placeholder="Task name" v-model="taskName">
+    </p>
+    <p>
+      <h3>Time allotted in hours</h3>
+      <input type="number" placeholder="Task time in hours" v-model="taskTime">
+    </p>
+    <button type="submit">Add Task</button>
+  </form>
+
+  <div>
+    <h2>Tasks:</h2>
+    <ul>
+      <li v-for="(task, index) in tasks">
+        {{ task.name }} ---> {{ task.time }}hrs
+        <button @click="remove(index)">Remove</button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script>
+  const app = Vue.createApp({
+    data() {
+      return {
+        taskName: null,
+        taskTime: null,
+        tasks: []
+      }
+    },
+    methods: {
+      addTask() {
+        let task = {
+          name: this.taskName,
+          time: this.taskTime
+        }
+        this.tasks.push(task)
+        this.taskName = null
+        this.taskTime = null
+      },
+      remove(index) {
+        this.tasks.splice(index, 1);
+      }
+    }
+  })
+ app.mount('#app')
+</script>
+</center>
+
+</body>
+</html>
